@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="orange_text_brand">#e7522e</color>
+    <color name="orange_primary">#FA8523</color>
+    <color name="color_negro_transparente">#CC000000</color>
+    <color name="color_gris_toolbar">#424242</color>
 </resources>
