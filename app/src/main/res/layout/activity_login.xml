@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<LinearLayout
+		android:orientation="vertical"
+		android:gravity="center"
+		android:background="#212121"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<!-- ===== CAMBIO REALIZADO AQUÍ ===== -->
+		<!-- Se ha cambiado el ID para que no se repita. -->
+		<ImageView
+			android:id="@+id/imgAppLogo"
+			android:layout_width="120dp"
+			android:layout_height="120dp"
+			android:src="@drawable/ic_inventory_logo"
+			android:contentDescription="@string/ic_inventory_logo"
+			android:layout_gravity="center"
+			android:clickable="true"
+			android:focusable="true" />
+
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="Inventory"
+			android:textColor="#FF6F00"
+			android:textStyle="bold"
+			android:textSize="36sp"
+			android:layout_marginBottom="40dp"/>
+
+		<!-- Este ID se mantiene, ya que describe correctamente la animación -->
+		<com.airbnb.lottie.LottieAnimationView
+			android:id="@+id/fingerprintAnimation"
+			android:layout_width="200dp"
+			android:layout_height="200dp"
+			android:layout_gravity="center"
+			app:lottie_rawRes="@raw/fingerprint_biometric_scan"
+			app:lottie_autoPlay="true"
+			app:lottie_loop="true" />
+
+	</LinearLayout>
+
+</layout>
+
+
