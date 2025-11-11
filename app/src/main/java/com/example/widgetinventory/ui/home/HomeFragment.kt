@@ -11,7 +11,7 @@ import com.example.widgetinventory.databinding.FragmentHomeBinding
 import com.example.widgetinventory.ui.home.adapter.ProductAdapter
 import android.content.Context
 import android.content.Intent
-import com.example.widgetinventory.LoginActivity
+import com.example.widgetinventory.ui.login.LoginActivity
 import android.widget.ImageView
 import androidx.navigation.fragment.findNavController
 import com.example.widgetinventory.R
@@ -33,7 +33,14 @@ class HomeFragment  : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         val adapter = ProductAdapter(emptyList()) { product ->
-            // Aquí más adelante abrirás el detalle (HU5)
+            // Obtenemos el ID del producto clickeado
+            val productId = product.id
+
+            // Creamos la acción de navegación con el ID del producto
+            val action = HomeFragmentDirections.actionHomeFragmentToProductDetailFragment(productId)
+
+            // 3. Navegamos
+            findNavController().navigate(action)
         }
 
         binding.recyclerProducts.layoutManager = LinearLayoutManager(requireContext())
@@ -45,9 +52,9 @@ class HomeFragment  : Fragment() {
             adapter.updateList(products)
         }
 
-        // Botón flotante → HU4 (Agregar producto)
+        // Botón flotante
         binding.fabAddProduct.setOnClickListener {
-            findNavController().navigate(R.id.addProductFragment)
+            findNavController().navigate(R.id.action_homeFragment_to_addProductFragment)
         }
 
         return binding.root
@@ -90,6 +97,4 @@ class HomeFragment  : Fragment() {
             apply()
         }
     }
-
-
 }

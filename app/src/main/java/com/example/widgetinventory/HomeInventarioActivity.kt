@@ -9,10 +9,10 @@ class HomeInventarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         
 
-        // 🔹 Cargar el fragmento del inventario (HU3)
+        // Cargar el fragmento del inventario
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, HomeFragment()) // usa el layout completo
+                .replace(android.R.id.content, HomeFragment())
                 .commit()
         }
     }
