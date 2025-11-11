@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Widget Inventory</string>
+    <string name="ic_inventory_logo">Logo de la aplicación de inventario</string>
 </resources>
