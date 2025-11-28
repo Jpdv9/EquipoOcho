@@ -1,48 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#000000">
 
 	<LinearLayout
-		android:orientation="vertical"
-		android:gravity="center"
-		android:background="#212121"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:padding="32dp"
+		android:gravity="center_horizontal">
 
-		<!-- ===== CAMBIO REALIZADO AQUÍ ===== -->
-		<!-- Se ha cambiado el ID para que no se repita. -->
+		<!-- LOGO DE LA APP -->
 		<ImageView
 			android:id="@+id/imgAppLogo"
-			android:layout_width="120dp"
-			android:layout_height="120dp"
+			android:layout_width="130dp"
+			android:layout_height="130dp"
 			android:src="@drawable/ic_inventory_logo"
-			android:contentDescription="@string/ic_inventory_logo"
-			android:layout_gravity="center"
-			android:clickable="true"
-			android:focusable="true" />
+			android:layout_marginBottom="35dp" />
 
+		<!-- CAMPO EMAIL -->
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/emailLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:hint="Email"
+			app:hintTextColor="@android:color/white"
+			app:boxStrokeColor="@android:color/white">
 
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/inputEmail"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:textColor="@android:color/white"
+				android:maxLength="40" />
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<!-- CAMPO PASSWORD -->
+		<com.google.android.material.textfield.TextInputLayout
+			android:id="@+id/passwordLayout"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"
+			android:hint="Password"
+			app:hintTextColor="@android:color/white"
+			app:endIconMode="password_toggle"
+			app:endIconTint="@android:color/white">
+
+			<com.google.android.material.textfield.TextInputEditText
+				android:id="@+id/inputPassword"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:inputType="numberPassword"
+				android:maxLength="10"
+				android:textColor="@android:color/white" />
+		</com.google.android.material.textfield.TextInputLayout>
+
+		<!-- MENSAJE ERROR PASSWORD -->
 		<TextView
+			android:id="@+id/errorPassword"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Mínimo 6 dígitos"
+			android:textColor="#FF4444"
+			android:textSize="12sp"
+			android:visibility="gone"
+			android:layout_marginTop="4dp" />
+
+		<!-- BOTÓN LOGIN -->
+		<Button
+			android:id="@+id/btnLogin"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Login"
+			android:enabled="false"
+			android:textColor="@android:color/white"
+			android:backgroundTint="#e7522e"
+			android:textStyle="bold"
+			android:layout_marginTop="35dp"
+			android:padding="12dp" />
+
+		<!-- BOTÓN REGISTRARSE -->
+		<TextView
+			android:id="@+id/btnRegister"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="Inventory"
-			android:textColor="#FF6F00"
-			android:textStyle="bold"
-			android:textSize="36sp"
-			android:layout_marginBottom="40dp"/>
-
-		<!-- Este ID se mantiene, ya que describe correctamente la animación -->
-		<com.airbnb.lottie.LottieAnimationView
-			android:id="@+id/fingerprintAnimation"
-			android:layout_width="200dp"
-			android:layout_height="200dp"
-			android:layout_gravity="center"
-			app:lottie_rawRes="@raw/fingerprint_biometric_scan"
-			app:lottie_autoPlay="true"
-			app:lottie_loop="true" />
+			android:text="Registrarse"
+			android:textColor="#9EA1A1"
+			android:textSize="16sp"
+			android:layout_marginTop="20dp"
+			android:enabled="false" />
 
 	</LinearLayout>
 
-</layout>
-
-
+</ScrollView>
