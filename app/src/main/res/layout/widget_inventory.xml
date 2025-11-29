@@ -6,7 +6,7 @@
     android:background="@drawable/widget_background"
     android:padding="16dp">
 
-
+    <!-- Logo -->
     <ImageView
         android:id="@+id/logo"
         android:layout_width="40dp"
@@ -16,7 +16,7 @@
         android:src="@drawable/ic_manage"
         app:tint="#FFFFFF" />
 
-
+    <!-- Texto "Inventory" -->
     <TextView
         android:id="@+id/txt_inventory"
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-
+    <!-- Ojo - AL LADO del texto pregunta -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
 
     </LinearLayout>
 
-
+    <!-- Saldo centrado -->
     <TextView
         android:id="@+id/txt_balance"
         android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
-
+    <!-- Engranaje - AL LADO del texto gestionar -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
