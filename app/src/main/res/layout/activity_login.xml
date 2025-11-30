@@ -15,10 +15,10 @@
 		<!-- LOGO DE LA APP -->
 		<ImageView
 			android:id="@+id/imgAppLogo"
-			android:layout_width="130dp"
+			android:layout_width="wrap_content"
 			android:layout_height="130dp"
-			android:src="@drawable/ic_inventory_logo"
-			android:layout_marginBottom="35dp" />
+			android:layout_marginBottom="35dp"
+			android:src="@drawable/ic_inventory_logo" />
 
 		<!-- CAMPO EMAIL -->
 		<com.google.android.material.textfield.TextInputLayout
