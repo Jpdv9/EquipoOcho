@@ -2,34 +2,36 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="120dp"
     android:background="@drawable/widget_background"
     android:padding="16dp">
 
-    <!-- Logo -->
+    <!-- ICONO (izquierda) -->
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:src="@drawable/ic_manage"
         app:tint="#FFFFFF" />
 
-    <!-- Texto "Inventory" -->
+    <!-- "Inventory" debajo del icono -->
     <TextView
         android:id="@+id/txt_inventory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/logo"
-        android:layout_alignStart="@+id/logo"
+        android:layout_alignStart="@id/logo"
+        android:layout_below="@id/logo"
+        android:layout_marginTop="4dp"
         android:text="Inventory"
-        android:textColor="#e7522e"
-        android:textSize="14sp"
+        android:textColor="#E7522E"
+        android:textSize="16sp"
         android:textStyle="bold" />
 
-    <!-- Ojo - AL LADO del texto pregunta -->
+    <!-- Encabezado (¿Cuánto tengo...) + ojo -->
     <LinearLayout
+        android:id="@+id/header_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -43,35 +45,36 @@
             android:layout_height="wrap_content"
             android:text="¿Cuánto tengo de inventario?"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/eye_icon"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginStart="8dp"
             android:src="@android:drawable/ic_menu_view"
             app:tint="#FFFFFF" />
-
     </LinearLayout>
 
-    <!-- Saldo centrado -->
+    <!-- SALDO alineado a la derecha -->
     <TextView
         android:id="@+id/txt_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_below="@id/header_row"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="4dp"
         android:text="$ ****"
         android:textColor="#FFFFFF"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!-- Engranaje - AL LADO del texto gestionar -->
+    <!-- Gestionar Inventario + engranaje -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
@@ -79,18 +82,17 @@
             android:id="@+id/txt_manage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Gestionar inventario"
+            android:text="Gestionar Inventario"
             android:textColor="#FFFFFF"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <ImageView
             android:id="@+id/btn_manage"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="4dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="6dp"
             android:src="@drawable/ic_gear"
             app:tint="#FA8523" />
-
     </LinearLayout>
 
 </RelativeLayout>
