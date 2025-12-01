@@ -1,18 +1,17 @@
-package com.example.widgetinventory.ui.detail
+package com.example.widgetinventory.ui.addproduct
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.widgetinventory.data.repository.ProductRepository
 
-class DetailViewModelFactory(
-    private val repository: ProductRepository,
-    private val productId: String
+class AddProductViewModelFactory(
+    private val repository: ProductRepository
 ) : ViewModelProvider.Factory {
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DetailViewModel::class.java)) {
-            return DetailViewModel(repository, productId) as T
+        if (modelClass.isAssignableFrom(AddProductViewModel::class.java)) {
+            return AddProductViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
