@@ -1,107 +1,92 @@
 package com.example.widgetinventory.ui.login
 
-import android.content.Intent
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
-import com.airbnb.lottie.LottieAnimationView
-import com.example.widgetinventory.MainActivity
 import com.example.widgetinventory.R
-import java.util.concurrent.Executor
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
 
-    private lateinit var executor: Executor
-    private lateinit var biometricPrompt: BiometricPrompt
-    private lateinit var promptInfo: BiometricPrompt.PromptInfo
 
-    // Saber si la app se abrió desde el widget
-    private var openedFromWidget = false
+    private lateinit var inputEmail: TextInputEditText
+    private lateinit var inputPassword: TextInputEditText
+    private lateinit var emailLayout: TextInputLayout
+    private lateinit var passwordLayout: TextInputLayout
+    private lateinit var errorPassword: TextView
+    private lateinit var btnLogin: Button
+    private lateinit var btnRegister: TextView
 
-    companion object {
-        private const val PREFS_NAME = "InventoryPrefs"
-        private const val KEY_IS_LOGGED_IN = "is_logged_in"
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Saber si viene del widget
-        openedFromWidget = intent.getBooleanExtra("fromWidget", false)
-
-        // Si ya estaba logueado → ir directo al Home
-        if (isSessionActive()) {
-            navigateToHome()
-            return
-        }
-
         setContentView(R.layout.activity_login)
 
-        // Inicializar el ejecutor
-        executor = ContextCompat.getMainExecutor(this)
 
-        // Configurar autenticación biométrica
-        biometricPrompt = BiometricPrompt(
-            this, executor,
-            object : BiometricPrompt.AuthenticationCallback() {
+        // Inicializar vistas
+        inputEmail = findViewById(R.id.inputEmail)
+        inputPassword = findViewById(R.id.inputPassword)
+        emailLayout = findViewById(R.id.emailLayout)
+        passwordLayout = findViewById(R.id.passwordLayout)
+        errorPassword = findViewById(R.id.errorPassword)
+        btnLogin = findViewById(R.id.btnLogin)
+        btnRegister = findViewById(R.id.btnRegister)
 
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    Toast.makeText(applicationContext, "Error: $errString", Toast.LENGTH_SHORT)
-                        .show()
-                }
+        // Inactivar botones al inicio
+        btnLogin.isEnabled = false
+        btnRegister.isEnabled = false
 
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    Toast.makeText(applicationContext, "Autenticación exitosa", Toast.LENGTH_SHORT)
-                        .show()
+        // Validar Email y Password
+        inputEmail.addTextChangedListener(formWatcher)
+        inputPassword.addTextChangedListener(formWatcher)
 
-                    saveSessionState(true)
+        // Acción de Login
+        btnLogin.setOnClickListener {
+            Toast.makeText(this, "Intentando iniciar sesión...", Toast.LENGTH_SHORT).show()
+        }
 
-                    // Redirigir al Home (venga del widget o no)
-                    navigateToHome()
-                }
-
-                override fun onAuthenticationFailed() {
-                    super.onAuthenticationFailed()
-                    Toast.makeText(applicationContext, "Huella no reconocida", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        )
-
-        promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Autenticación con Biometría")
-            .setSubtitle("Ingrese su huella digital")
-            .setNegativeButtonText("Cancelar")
-            .build()
-
-        val fingerprintImage = findViewById<LottieAnimationView>(R.id.fingerprintAnimation)
-        fingerprintImage.setOnClickListener {
-            biometricPrompt.authenticate(promptInfo)
+        // Acción de Registrarse
+        btnRegister.setOnClickListener {
+            Toast.makeText(this, "Ir a pantalla de registro...", Toast.LENGTH_SHORT).show()
         }
     }
 
-    // Lleva al usuario al Home
-    private fun navigateToHome() {
-        val intent = Intent(this@LoginActivity, MainActivity::class.java).apply {
-            putExtra("fromWidget", openedFromWidget)
+    // Watcher para validar email y password en tiempo real
+    private val formWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            validateForm()
         }
-        startActivity(intent)
-        finish()
+
+        override fun afterTextChanged(s: Editable?) {}
     }
 
-    private fun isSessionActive(): Boolean {
-        val prefs: SharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
-    }
+    private fun validateForm() {
+        val email = inputEmail.text.toString().trim()
+        val password = inputPassword.text.toString().trim()
 
-    fun saveSessionState(is_logged_in: Boolean) {
-        val prefs: SharedPreferences = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putBoolean(KEY_IS_LOGGED_IN, is_logged_in).apply()
+        // Validación Password 6-10 dígitos solo números
+        if (password.length in 1..5) {
+            errorPassword.text = "Mínimo 6 dígitos"
+            errorPassword.visibility = TextView.VISIBLE
+            passwordLayout.boxStrokeColor = getColor(android.R.color.holo_red_dark)
+        } else {
+            errorPassword.visibility = TextView.GONE
+            passwordLayout.boxStrokeColor = getColor(android.R.color.white)
+        }
+
+        // Activar Login solo si ambas entradas son válidas
+        val validForm = email.isNotEmpty() && password.length in 6..10
+        btnLogin.isEnabled = validForm
+
+        // Activar Registro con ambos campos llenos (HU 2.0)
+        btnRegister.isEnabled = email.isNotEmpty() && password.isNotEmpty()
+
     }
 }
