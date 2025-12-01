@@ -13,6 +13,7 @@ import com.google.android.material.textfield.TextInputLayout
 
 class LoginActivity : AppCompatActivity() {
 
+
     private lateinit var inputEmail: TextInputEditText
     private lateinit var inputPassword: TextInputEditText
     private lateinit var emailLayout: TextInputLayout
@@ -21,9 +22,11 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: TextView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
 
         // Inicializar vistas
         inputEmail = findViewById(R.id.inputEmail)
@@ -84,5 +87,6 @@ class LoginActivity : AppCompatActivity() {
 
         // Activar Registro con ambos campos llenos (HU 2.0)
         btnRegister.isEnabled = email.isNotEmpty() && password.isNotEmpty()
+
     }
 }
