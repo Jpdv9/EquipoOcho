@@ -24,17 +24,15 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var btnLogin: Button
     private lateinit var btnRegister: TextView
 
-    // 1. Añadimos una instancia de FirebaseAuth
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // 2. Inicializamos Firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
 
-        // ... (inicialización de vistas no cambia)
+        // --- (La inicialización de vistas no cambia) ---
         inputEmail = findViewById(R.id.inputEmail)
         inputPassword = findViewById(R.id.inputPassword)
         emailLayout = findViewById(R.id.emailLayout)
@@ -43,31 +41,28 @@ class LoginActivity : AppCompatActivity() {
         btnLogin = findViewById(R.id.btnLogin)
         btnRegister = findViewById(R.id.btnRegister)
 
-        // ... (validaciones no cambian)
+
         btnLogin.isEnabled = false
         btnRegister.isEnabled = false
         inputEmail.addTextChangedListener(formWatcher)
         inputPassword.addTextChangedListener(formWatcher)
 
-        // 3. Modificamos la acción de Login
+        // login
         btnLogin.setOnClickListener {
             val email = inputEmail.text.toString().trim()
             val password = inputPassword.text.toString().trim()
 
-            // Deshabilitamos el botón para dar feedback al usuario
             btnLogin.isEnabled = false
             btnLogin.text = "INICIANDO..."
 
             firebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Si el login es exitoso, navegamos a la pantalla principal
                         Toast.makeText(this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
-                        finish() // Cerramos la LoginActivity para que el usuario no pueda volver
+                        finish()
                     } else {
-                        // Si el login falla, mostramos un error y reactivamos el botón
                         Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                         btnLogin.isEnabled = true
                         btnLogin.text = "INICIAR SESIÓN"
@@ -75,21 +70,43 @@ class LoginActivity : AppCompatActivity() {
                 }
         }
 
-        // ... (el resto del archivo no cambia)
+        // Acción de Registrarse (ahora con lógica de Firebase)
         btnRegister.setOnClickListener {
-            Toast.makeText(this, "Ir a pantalla de registro...", Toast.LENGTH_SHORT).show()
+            val email = inputEmail.text.toString().trim()
+            val password = inputPassword.text.toString().trim()
+
+            // Deshabilitamos los botones para dar feedback
+            btnRegister.isEnabled = false
+            btnLogin.isEnabled = false
+            btnRegister.text = "REGISTRANDO..."
+
+            // Llamamos a Firebase para crear el usuario
+            firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        // Si el registro es exitoso, informamos y vamos a la pantalla principal
+                        Toast.makeText(this, "Registro exitoso. Iniciando sesión...", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                        finish() // Cerramos la LoginActivity
+                    } else {
+                        // Si el registro falla, mostramos el error y reactivamos los botones
+                        Toast.makeText(this, "Error en el registro: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                        btnRegister.isEnabled = true
+                        btnLogin.isEnabled = true
+                        btnRegister.text = "REGISTRARSE"
+                    }
+                }
         }
     }
 
     private val formWatcher = object : TextWatcher {
-        // ... (código del watcher no cambia)
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) { validateForm() }
         override fun afterTextChanged(s: Editable?) {}
     }
 
     private fun validateForm() {
-        // ... (código de validación no cambia)
         val email = inputEmail.text.toString().trim()
         val password = inputPassword.text.toString().trim()
         if (password.length in 1..5) {
